@@ -1,26 +1,20 @@
 import axios from 'axios';
-const ApiSave = (baseurl) => {    
-    
-    const retrieveAll = async () => {
-        const res = await axios.get(`${baseurl}/posts`);
+export default class ApiSave {
+    constructor( baseurl){
+        this.baseurl = baseurl;
+    }
+    retrieveAll = async () => {
+        const res = await axios.get(`${this.baseurl}/posts`);
         return res.data;
-    };
-
-    const update = async (post) => {
-        const res = await axios.put(`${baseurl}/posts/${post.id}`, post);
-        return res.data;
-    };
-
-    const insert = async (post) => {
-        const res = await axios.post(`${baseurl}/posts`, post);
-        return res.data;
-    };
-    return {
-        retrieveAll,
-        update,
-        insert
     }
 
-};
+     update = async (post) => {
+        const res = await axios.put(`${this.baseurl}/posts/${post.id}`, post);
+        return res.data;
+    }
 
-export default ApiSave;
+     insert = async (post) => {
+        const res = await axios.post(`${this.baseurl}/posts`, post);
+        return res.data;
+    }
+}

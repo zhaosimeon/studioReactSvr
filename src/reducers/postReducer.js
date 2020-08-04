@@ -1,7 +1,6 @@
 import ApiSave from '../ApiSave';
 const baseurl = 'http://localhost:8080';
-
-const api = ApiSave(baseurl);
+const api = new ApiSave(baseurl);
 const postReducer = (state = [], action) => {
     switch (action.type) {
         case 'ADD_POST':
