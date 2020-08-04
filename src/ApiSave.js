@@ -1,6 +1,5 @@
 import axios from 'axios';
-const ApiSave = () => {
-    const baseurl = 'http://localhost:8080';
+const ApiSave = (baseurl) => {    
     
     const retrieveAll = async () => {
         const res = await axios.get(`${baseurl}/posts`);
@@ -17,9 +16,9 @@ const ApiSave = () => {
         return res.data;
     };
     return {
-        retrieveAll: retrieveAll,
-        update: update,
-        insert: insert
+        retrieveAll,
+        update,
+        insert
     }
 
 };
