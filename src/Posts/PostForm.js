@@ -49,19 +49,18 @@ class PostForm extends Component {
                     required type="text"
                     value={this.state.author}
                     onChange={this.handleChange}
-                    placeholder="Enter Post Author" />
-                <br /> < br />
+                    placeholder="Enter Post Author" />                
                 <input name="title"
                     required type="text"
                     value={this.state.title}
                     onChange={this.handleChange}
                     placeholder="Enter Post Title" />
-                <br /> < br />
-                <textarea required rows="5" cols="28"
+                    <br />
+                <textarea required rows="3" cols="29"
                     name="message" value={this.state.message}
                     onChange={this.handleChange}
                     placeholder="Enter Post Message" />
-                <br /> < br />
+                    <br />
                 <button class="btn btn-primary"> Post </button>
             </form>
         </div>
