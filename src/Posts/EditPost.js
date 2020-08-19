@@ -42,17 +42,18 @@ class EditPost extends Component {
     render() {
         return (
             <div>
-                <form onSubmit={this.handleSubmit}>
+                <form >
                     <input name="author" required type="text" value={this.state.author} onChange={this.handleChange}
                         placeholder="Enter Post Author" />
-                    <br /><br />
+                    
                     <input name="title" required type="text" value={this.state.title} onChange={this.handleChange}
                         placeholder="Enter Post Title" />
-                    <br /><br />
+                    <br />
                     <textarea name="message" required rows="5" value={this.state.message} onChange={this.handleChange}
                         cols="28" placeholder="Enter Post" />
-                    <br /><br />
-                    <button className ="btn btn-primary">Update Post</button>
+                    <br />
+                    <button  className ="btn btn-primary" onClick={this.handleSubmit}>Update</button>
+                    <button  className ="btn btn-default">Cancel</button>
                 </form>
             </div>
         );
