@@ -1,7 +1,9 @@
 //ADD NEW POST
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import ApiSave from '../ApiSave';
 
+const api = new ApiSave();
 class PostForm extends Component {
     constructor(props) {
         super(props);
@@ -20,7 +22,7 @@ class PostForm extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        const { title, author, message } = this.state;        
+        const { title, author, message } = this.state;
         const data = {
             id: new Date(),
             author,
@@ -28,16 +30,21 @@ class PostForm extends Component {
             message,
             editing: false
         }
-
-        this.props.dispatch({
-            type: 'ADD_POST',
-            data
-        });
-        this.setState({ author: '', title: '', message: '' });
+        api.insert(data).then(
+            retData => {
+                this.props.dispatch({
+                    type: 'ADD_POST',
+                    data: retData
+                });
+                this.setState({ author: '', title: '', message: '' });
+            }
+        );
+        
     }
     render() {
         return (<div >
-            <h1 > Create Post </h1> <form onSubmit={this.handleSubmit} >
+            <h6 > Create Post </h6>
+            <form onSubmit={this.handleSubmit} >
                 <input name="author"
                     required type="text"
                     value={this.state.author}
@@ -50,14 +57,16 @@ class PostForm extends Component {
                     onChange={this.handleChange}
                     placeholder="Enter Post Title" />
                 <br /> < br />
-                <textarea required rows="5" cols="28"                
+                <textarea required rows="5" cols="28"
                     name="message" value={this.state.message}
                     onChange={this.handleChange}
                     placeholder="Enter Post Message" />
                 <br /> < br />
-                <button > Post </button> </form>
+                <button class="btn btn-primary"> Post </button>
+            </form>
         </div>
         );
     }
 }
+
 export default connect()(PostForm);

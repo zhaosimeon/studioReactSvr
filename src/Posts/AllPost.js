@@ -3,11 +3,24 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import EditPost from './EditPost'
 import Post from './Post';
+import ApiSave from '../ApiSave';
+const api = new ApiSave();
 class AllPost extends Component {
+   
+    componentDidMount() {
+        api.retrieveAll().then(
+          externalData => {
+            this.props.dispatch({
+                type: 'RET_POST_LIST',
+                data: externalData
+            });
+          }
+        );
+      }
     render() {
         return (
             <div className="App">
-                <h1 className="navbar">All Posts</h1>
+                <h4>All Posts</h4>
                 {this.props.posts.map(
                     (post) => (
                     <div>
