@@ -1,6 +1,9 @@
 //EDIT POST
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import ApiSave from '../ApiSave';
+const api = new ApiSave();
+
 class EditPost extends Component {
     constructor(props) {
         super(props);
@@ -21,15 +24,19 @@ class EditPost extends Component {
         e.preventDefault();
         const { title, author, message } = this.state;
         const data = {
+            id: this.props.post.id,
             author,
             title,
             message
         }
-        this.props.dispatch({
-            type: 'UPDATE_POST',
-            id: this.props.post.id,
-            data
-        });
+        api.update(data).then(
+            retData =>this.props.dispatch({
+                type: 'UPDATE_POST',
+                id: this.props.post.id,
+                data: retData
+            })
+        );
+        
 
     }
     render() {
@@ -45,7 +52,7 @@ class EditPost extends Component {
                     <textarea name="message" required rows="5" value={this.state.message} onChange={this.handleChange}
                         cols="28" placeholder="Enter Post" />
                     <br /><br />
-                    <button>Update Post</button>
+                    <button className ="btn btn-primary">Update Post</button>
                 </form>
             </div>
         );

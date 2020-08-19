@@ -1,6 +1,8 @@
 import axios from 'axios';
+const baseurl = 'http://localhost:8080';
+
 export default class ApiSave {
-    constructor( baseurl){
+    constructor() {
         this.baseurl = baseurl;
     }
     retrieveAll = async () => {
@@ -8,12 +10,17 @@ export default class ApiSave {
         return res.data;
     }
 
-     update = async (post) => {
+    update = async (post) => {
         const res = await axios.put(`${this.baseurl}/posts/${post.id}`, post);
         return res.data;
     }
 
-     insert = async (post) => {
+    delete = async (postid) => {
+        const res = await axios.delete(`${this.baseurl}/posts/${postid}`);
+        return res.data;
+    }
+
+    insert = async (post) => {
         const res = await axios.post(`${this.baseurl}/posts`, post);
         return res.data;
     }

@@ -1,10 +1,8 @@
-import ApiSave from '../ApiSave';
-const baseurl = 'http://localhost:8080';
-const api = new ApiSave(baseurl);
 const postReducer = (state = [], action) => {
     switch (action.type) {
+        case 'RET_POST_LIST':
+            return state.concat(action.data);
         case 'ADD_POST':
-            api.insert(action.data);
             return state.concat([action.data]);
         case 'DELETE_POST':
             return state.filter((post) => post.id !== action.id);
@@ -14,14 +12,13 @@ const postReducer = (state = [], action) => {
         case 'UPDATE_POST':
             return state.map((post) => {
                 if (post.id === action.id) {
-                    const foundPost ={
+                    const foundPost = {
                         id: action.id,
                         author: action.data.author,
                         title: action.data.title,
                         message: action.data.message,
                         editing: !post.editing
-                    };
-                    api.update(foundPost);
+                    };                    
                     return foundPost;
                 } else return post;
             });
