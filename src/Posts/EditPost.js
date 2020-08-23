@@ -39,9 +39,10 @@ class EditPost extends Component {
         
 
     }
+
     render() {
         return (
-            <div>
+            <div className="Container">
                 <form >
                     <input name="author" required type="text" value={this.state.author} onChange={this.handleChange}
                         placeholder="Enter Post Author" />
