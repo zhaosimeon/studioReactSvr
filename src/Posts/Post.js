@@ -15,14 +15,14 @@ class Post extends Component {
         
     }
     render() {
-        return (<div lassName="post" >
+        return (<div className="post" >
             <h6> {this.props.post.author} </h6>
             <h6> {this.props.post.title} </h6>
             <p> {this.props.post.message} </p>
-            <button class="btn btn-primary"
+            <button className="btn btn-primary"
                 onClick={
                     () => this.props.dispatch({ type: 'EDIT_POST', id: this.props.post.id })} > Edit </button>
-            <button class="btn btn-danger"
+            <button className="btn btn-danger"
                 onClick={() => this.delete()} > Delete </button>
         </div>
         );

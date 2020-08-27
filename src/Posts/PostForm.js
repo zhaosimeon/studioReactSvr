@@ -42,7 +42,7 @@ class PostForm extends Component {
         
     }
     render() {
-        return (<div >
+        return (<div className="Container">
             <h6 > Create Post </h6>
             <form onSubmit={this.handleSubmit} >
                 <input name="author"
@@ -61,7 +61,7 @@ class PostForm extends Component {
                     onChange={this.handleChange}
                     placeholder="Enter Post Message" />
                     <br />
-                <button class="btn btn-primary"> Post </button>
+                <button className="btn btn-primary"> Post </button>
             </form>
         </div>
         );
