@@ -1,44 +1,38 @@
 //LIST POSTS
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import EditPost from './EditPost'
-import Post from './Post';
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { EditPost } from './EditPost'
+import { Post } from './Post';
 import ApiSave from '../ApiSave';
-const api = new ApiSave();
-class AllPost extends Component {
-   
-    componentDidMount() {
-        api.retrieveAll().then(
-          externalData => {
-            this.props.dispatch({
-                type: 'RET_POST_LIST',
-                data: externalData
+import { RET_POST_LIST } from './postSlice'
+const loadStatus = { loaded: false };
+
+export const AllPost = () => {
+    const posts = useSelector(state => state.posts);
+    const dispatch = useDispatch();
+    const api = new ApiSave();
+
+    useEffect(() => {
+        if (!loadStatus.loaded) {
+            api.retrieveAll().then(externalData => {
+                dispatch(RET_POST_LIST({
+                    data: externalData
+                }));
             });
-          }
-        );
-      }
-    render() {
-        return (
-            <div className="App">
-                <h4>All Posts</h4>
-                {this.props.posts.map(
-                    (post) => (
-                    <div>
-                        {post.editing ? <EditPost post={post} key={post.id} /> :
-                            <Post key={post.id} post={post} />}
-                    </div>)
-                    )
+            loadStatus.loaded = true;
+        }
 
-                }
-            </div>
-        );
-    }
+    });
+    const renderedPosts = posts.map(post => (
+        <div>
+            {post.editing ? <EditPost post={post} key={post.id} /> :
+                <Post key={post.id} post={post} />}
+        </div>)
+    );
+    return (
+        <div className="Container">
+            <h4>All Posts</h4>
+            {renderedPosts}
+        </div>
+    )
 }
-
-const mapStateToProps = (state) => {
-    return {
-        posts: state
-    }
-}
-
-export default connect(mapStateToProps)(AllPost);
