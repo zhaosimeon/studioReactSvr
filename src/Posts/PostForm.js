@@ -1,30 +1,25 @@
 //ADD NEW POST
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, { useState } from 'react';
 import ApiSave from '../ApiSave';
+import { nanoid } from '@reduxjs/toolkit';
+import { ADD_POST } from './postSlice';
+import { useSelector, useDispatch } from 'react-redux';
 
-const api = new ApiSave();
-class PostForm extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            title: '',
-            author: '',
-            message: ''
-        };
-    }
-    handleChange = (e) => {
+export const PostForm = () => {
+    const api = new ApiSave();
+    const [title, setTitle] = useState('')
+    const [author, setAuthor] = useState('')
+    const [message, setMessage] = useState('')
+    const dispatch = useDispatch()
+    const onTitleChanged = e => setTitle(e.target.value)
+    const onAuthorChanged = e => setAuthor(e.target.value)
+    const onMessageChanged = e => setMessage(e.target.value)
 
-        this.setState({
-            [e.target.name]: e.target.value
-        });
-    }
-
-    handleSubmit = (e) => {
+    const handleSubmit = e => {
         e.preventDefault();
-        const { title, author, message } = this.state;
+        
         const data = {
-            id: new Date(),
+            id: nanoid(),
             author,
             title,
             message,
@@ -32,40 +27,35 @@ class PostForm extends Component {
         }
         api.insert(data).then(
             retData => {
-                this.props.dispatch({
-                    type: 'ADD_POST',
-                    data: retData
-                });
-                this.setState({ author: '', title: '', message: '' });
+                dispatch(ADD_POST({ data: data }));
+                setTitle('');
+                setAuthor('');
+                setMessage('');
             }
         );
-        
-    }
-    render() {
-        return (<div className="Container">
-            <h6 > Create Post </h6>
-            <form onSubmit={this.handleSubmit} >
-                <input name="author"
-                    required type="text"
-                    value={this.state.author}
-                    onChange={this.handleChange}
-                    placeholder="Enter Post Author" />                
-                <input name="title"
-                    required type="text"
-                    value={this.state.title}
-                    onChange={this.handleChange}
-                    placeholder="Enter Post Title" />
-                    <br />
-                <textarea required rows="3" cols="29"
-                    name="message" value={this.state.message}
-                    onChange={this.handleChange}
-                    placeholder="Enter Post Message" />
-                    <br />
-                <button className="btn btn-primary"> Post </button>
-            </form>
-        </div>
-        );
-    }
-}
 
-export default connect()(PostForm);
+    }
+    return (<div className="Container">
+        <h6 > Create Post </h6>
+        <form>
+            <input name="author"
+                required type="text"
+                value={author}
+                onChange={onAuthorChanged}
+                placeholder="Enter Post Author" />
+            <input name="title"
+                required type="text"
+                value={title}
+                onChange={onTitleChanged}
+                placeholder="Enter Post Title" />
+            <br />
+            <textarea required rows="3" cols="29"
+                value={message}
+                onChange={onMessageChanged}
+                placeholder="Enter Post Message" />
+            <br />
+            <button type="button" className="btn btn-primary" onClick={handleSubmit}> Post </button>
+        </form>
+    </div>
+    )
+}

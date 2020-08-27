@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 
-import AllPost from './Posts/AllPost';
-import PostForm from './Posts/PostForm';
+import {AllPost} from './Posts/AllPost';
+import {PostForm} from './Posts/PostForm';
 import ReactDefualt from './ReactDefault';
 class App extends Component {
     render() {

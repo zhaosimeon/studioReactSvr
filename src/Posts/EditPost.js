@@ -1,64 +1,54 @@
 //EDIT POST
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+//import { useHistory } from 'react-router-dom'
 import ApiSave from '../ApiSave';
-const api = new ApiSave();
+import { UPDATE_POST } from './postSlice'
 
-class EditPost extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            title: props.post.title,
-            author: props.post.author,
-            message: props.post.message
-        };
-    }
+export const EditPost = (props) => {
+    const api = new ApiSave();
+    const post = props.post;
 
-    handleChange = (e) => {
-        this.setState({
-            [e.target.name]: e.target.value
-        });
-    }
+    const [title, setTitle] = useState(post.title);
+    const [author, setAuthor] = useState(post.author);
+    const [message, setMessage] = useState(post.message);
+    const dispatch = useDispatch();
+    const onTitleChanged = e => setTitle(e.target.value);
+    const onAuthorChanged = e => setAuthor(e.target.value);
+    const onMessageChanged = e => setMessage(e.target.value);
 
-    handleSubmit = (e) => {
-        e.preventDefault();
-        const { title, author, message } = this.state;
+    const handleUpdate = () => {
+        // e.preventDefault();
         const data = {
-            id: this.props.post.id,
+            id: post.id,
             author,
             title,
             message
         }
         api.update(data).then(
-            retData =>this.props.dispatch({
-                type: 'UPDATE_POST',
-                id: this.props.post.id,
+            retData => dispatch(UPDATE_POST({
+                id: post.id,
                 data: retData
-            })
+            }))
         );
-        
+    };
 
-    }
+    return (
+        <section className="Container">
+            <form >
+                <input name="author" required type="text" value={author} onChange={onAuthorChanged}
+                    placeholder="Enter Post Author" />
 
-    render() {
-        return (
-            <div className="Container">
-                <form >
-                    <input name="author" required type="text" value={this.state.author} onChange={this.handleChange}
-                        placeholder="Enter Post Author" />
-                    
-                    <input name="title" required type="text" value={this.state.title} onChange={this.handleChange}
-                        placeholder="Enter Post Title" />
-                    <br />
-                    <textarea name="message" required rows="5" value={this.state.message} onChange={this.handleChange}
-                        cols="28" placeholder="Enter Post" />
-                    <br />
-                    <button  className ="btn btn-primary" onClick={this.handleSubmit}>Update</button>
-                    <button  className ="btn btn-default">Cancel</button>
-                </form>
-            </div>
-        );
-    }
+                <input name="title" required type="text" value={title} onChange={onTitleChanged}
+                    placeholder="Enter Post Title" />
+                <br />
+                <textarea name="message" required rows="5" value={message} onChange={onMessageChanged}
+                    cols="28" placeholder="Enter Post" />
+                <br />
+            </form>
+            <button className="btn btn-primary" onClick={handleUpdate}>Update</button>
+            <button className="btn btn-default">Cancel</button>
+        </section>
+    );
 }
 
-export default connect()(EditPost);
