@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { EditPost } from './EditPost'
-import { Post } from './Post';
+import { ViewPost } from './ViewPost';
 import ApiSave from '../ApiSave';
 import { RET_POST_LIST } from './postSlice'
 const loadStatus = { loaded: false };
@@ -26,7 +26,7 @@ export const AllPost = () => {
     const renderedPosts = posts.map(post => (
         <div>
             {post.editing ? <EditPost postid={post.id} key={post.id} /> :
-                <Post key={post.id} postid={post.id} />}
+                <ViewPost key={post.id} postid={post.id} />}
         </div>)
     );
     return (

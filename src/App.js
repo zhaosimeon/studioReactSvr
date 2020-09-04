@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 
 import {AllPost} from './Posts/AllPost';
-import {PostForm} from './Posts/PostForm';
+import {AddPost} from './Posts/AddPost';
 import ReactDefualt from './ReactDefault';
 class App extends Component {
     render() {
@@ -16,7 +16,7 @@ class App extends Component {
                     </div>
                     <div className="panel panel-success">
                         <div className="panel-body text-center" >
-                            <PostForm />
+                            <AddPost />
 
                         </div>
                     </div>
