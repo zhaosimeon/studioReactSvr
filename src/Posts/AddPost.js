@@ -5,7 +5,7 @@ import { nanoid } from '@reduxjs/toolkit';
 import { ADD_POST } from './postSlice';
 import { useSelector, useDispatch } from 'react-redux';
 
-export const PostForm = () => {
+export const AddPost = () => {
     const api = new ApiSave();
     const [title, setTitle] = useState('')
     const [author, setAuthor] = useState('')
