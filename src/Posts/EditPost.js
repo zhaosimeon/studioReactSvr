@@ -7,7 +7,7 @@ import { UPDATE_POST } from './postSlice'
 
 export const EditPost = (props) => {
     const api = new ApiSave();
-    const post = props.post;
+    const post = useSelector(state => state.posts.find(post => post.id === props.postid));
 
     const [title, setTitle] = useState(post.title);
     const [author, setAuthor] = useState(post.author);

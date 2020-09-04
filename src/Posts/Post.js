@@ -5,7 +5,7 @@ import {DELETE_POST, EDIT_POST} from './postSlice'
 import { useSelector, useDispatch } from 'react-redux';
 
 export const Post = (props) => {
-    const  post  = props.post;
+    const post = useSelector(state => state.posts.find(post => post.id === props.postid));
     const api = new ApiSave();
     const dispatch = useDispatch();
     const  deletePost = () => {        

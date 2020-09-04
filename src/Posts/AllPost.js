@@ -25,8 +25,8 @@ export const AllPost = () => {
     });
     const renderedPosts = posts.map(post => (
         <div>
-            {post.editing ? <EditPost post={post} key={post.id} /> :
-                <Post key={post.id} post={post} />}
+            {post.editing ? <EditPost postid={post.id} key={post.id} /> :
+                <Post key={post.id} postid={post.id} />}
         </div>)
     );
     return (
